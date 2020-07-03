@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SearchForm.css";
 
-const SearchForm = () => {
+const SearchForm = ({ saveUrl }) => {
   const [url, setUrl] = useState("");
 
   const handleInputChange = e => {
@@ -16,7 +16,7 @@ const SearchForm = () => {
         value={url}
         onChange={(e) => handleInputChange(e)}
       />
-      <button onClick={() => console.log(url)}>load file</button>
+      <button onClick={() => saveUrl(url)}>load file</button>
     </div>
   );
 };
