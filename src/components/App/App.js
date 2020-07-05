@@ -11,11 +11,11 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>VTT Caption Editor</h1>
+    <main>
+      <h1 className="title">VTT Caption Editor</h1>
       <SearchForm saveUrl={saveUrl} />
       <CueContainer url={url} />
-    </div>
+    </main>
   );
 };
 
