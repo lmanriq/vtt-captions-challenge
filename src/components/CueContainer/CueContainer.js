@@ -11,16 +11,19 @@ const CueContainer = ({ url }) => {
   }, [url]);
 
   const fetchData = async (url) => {
-    console.log('enter')
+    console.log("enter");
     const response = await fetch(`https://cors-anywhere.herokuapp.com/${url}`, {
       headers: {
         "Content-Type": "text/vtt",
       },
     });
-    console.log(response)
+    const text = await response.text();
+    setCaptions(text);
   };
 
-  return <div>{url && url}</div>;
+  return (<div>
+    {captions && captions}
+  </div>);
 };
 
 export default CueContainer;
