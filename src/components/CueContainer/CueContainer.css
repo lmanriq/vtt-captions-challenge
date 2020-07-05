@@ -1,0 +1,23 @@
+.captions-container {
+  display: flex;
+  margin: 3em;
+}
+
+.time-column {
+  width: 30%;
+}
+
+.caption-column {
+  width: 70%;
+}
+
+.time-box, .caption-box {
+  background-color: lightgrey;
+  margin: 0.5em;
+  height: 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}

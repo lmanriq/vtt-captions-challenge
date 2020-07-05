@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CueContainer.css";
 
 const CueContainer = ({ url }) => {
-  const [captions, setCaptions] = useState("");
+  const [captions, setCaptions] = useState([]);
 
   useEffect(() => {
     if (url) {
@@ -18,12 +18,58 @@ const CueContainer = ({ url }) => {
       },
     });
     const text = await response.text();
-    setCaptions(text);
+    parseData(text);
   };
 
-  return (<div>
-    {captions && captions}
-  </div>);
+  const parseData = (text) => {
+    const captionsArray = text.split("\n");
+    const matched = {};
+    let currentStamp;
+    captionsArray.forEach((caption) => {
+      if (caption.includes("-->")) {
+        currentStamp = caption;
+        matched[currentStamp] = [];
+      } else if (matched[currentStamp]) {
+        matched[currentStamp].push(caption);
+      }
+    });
+    const timeStamps = Object.keys(matched);
+    timeStamps.forEach(stamp => {
+      const captions = matched[stamp];
+      const captionsString = captions.join(' ');
+      matched[stamp] = captionsString
+    })
+    setCaptions(matched);
+  };
+
+  return (
+    <section className="captions-container">
+      <section className="time-column">
+        {captions &&
+          Object.keys(captions).map((time, index) => {
+            const splitTime = time.split(" ");
+            const startTime = splitTime[0];
+            const endTime = splitTime[2];
+            return (
+              <article key={index} className="time-box">
+                <p>{startTime}</p>
+                <p>{endTime}</p>
+              </article>
+            );
+          })}
+      </section>
+      <section className="caption-column">
+        {captions &&
+          Object.values(captions).map((capt, index) => {
+            return (
+              <article key={index} className="caption-box">
+                <p>{capt}</p>
+              </article>
+            );
+          })}
+      </section>
+    </section>
+  );
 };
 
 export default CueContainer;
