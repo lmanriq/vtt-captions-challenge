@@ -11,6 +11,7 @@ const SearchForm = ({ saveUrl }) => {
   return (
     <div>
       <input
+        className="search-input"
         type="text"
         placeholder="enter a .vtt file url here"
         value={url}
