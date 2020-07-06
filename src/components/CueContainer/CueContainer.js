@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CueContainer.css";
 import CueCard from "../CueCard/CueCard";
 import fileDownload from "js-file-download";
+import { fetchVttFile } from "../../apiCalls";
 
 const CueContainer = ({ url }) => {
   const [captions, setCaptions] = useState([]);
@@ -17,15 +18,7 @@ const CueContainer = ({ url }) => {
   const fetchData = async (url) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `https://cors-anywhere.herokuapp.com/${url}`,
-        {
-          headers: {
-            "Content-Type": "text/vtt",
-          },
-        }
-      );
-      const text = await response.text();
+      const text = await fetchVttFile(url);
       parseData(text);
       setError("");
       setLoading(false);
@@ -101,6 +94,7 @@ const CueContainer = ({ url }) => {
               return (
                 <CueCard
                   key={index}
+                  testId={index}
                   capt={capt}
                   timeStamp={timeStamp}
                   updateCaption={updateCaption}
