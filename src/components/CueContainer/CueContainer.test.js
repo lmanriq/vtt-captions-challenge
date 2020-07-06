@@ -34,6 +34,22 @@ It will perforate your stomach.`;
     expect(getByText("Loading... (may take a minute)")).toBeInTheDocument();
   });
 
+  it("keeps track of edited captions", async () => {
+    const mockVtt = `WEBVTT
+
+00:01.000 --> 00:04.000
+Never drink liquid nitrogen.
+
+00:05.000 --> 00:09.000
+It will perforate your stomach.`;
+    fetchVttFile.mockResolvedValueOnce(mockVtt);
+    const { getByText, getByTestId } = render(<CueContainer url="test" />);
+    const input = await waitForElement(() => getByTestId("caption-0"));
+    fireEvent.change(input, { target: { value: "Hello" } });
+    const newCaption = await waitForElement(() => getByText("Hello"))
+    expect(newCaption).toBeInTheDocument();
+  });
+
   it("can trigger a download of a vtt file", async () => {
     const mockVtt = `WEBVTT
 
