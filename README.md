@@ -14,6 +14,7 @@ This application take a URL of a publicly accessibly VTT file and parses it out 
  - React
  - React Hooks
  - React Testing Library
+ - Jest Dom
  - [JS file download library](https://github.com/kennethjiang/js-file-download/issues)
 
  ## Obstacles and considerations
