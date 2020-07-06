@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CueCard.css";
 
-const CueCard = ({ capt, timeStamp, updateCaption }) => {
+const CueCard = ({ capt, timeStamp, updateCaption, testId }) => {
   const [caption, setCaption] = useState(capt);
 
   const handleInputChange = (e) => {
@@ -13,6 +13,7 @@ const CueCard = ({ capt, timeStamp, updateCaption }) => {
   return (
     <div className="caption-box">
       <textarea
+        data-testid={`caption-${testId}`}
         className="caption-input"
         type="text"
         value={caption}
