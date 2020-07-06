@@ -8,6 +8,8 @@
 .captions-container {
   display: flex;
   margin: 3em;
+  height: 70vh;
+  overflow: scroll;
 }
 
 .time-column {

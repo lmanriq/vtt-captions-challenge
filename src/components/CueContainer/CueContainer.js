@@ -5,6 +5,8 @@ import fileDownload from "js-file-download";
 
 const CueContainer = ({ url }) => {
   const [captions, setCaptions] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (url) {
@@ -13,13 +15,24 @@ const CueContainer = ({ url }) => {
   }, [url]);
 
   const fetchData = async (url) => {
-    const response = await fetch(`https://cors-anywhere.herokuapp.com/${url}`, {
-      headers: {
-        "Content-Type": "text/vtt",
-      },
-    });
-    const text = await response.text();
-    parseData(text);
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `https://cors-anywhere.herokuapp.com/${url}`,
+        {
+          headers: {
+            "Content-Type": "text/vtt",
+          },
+        }
+      );
+      const text = await response.text();
+      parseData(text);
+      setError("");
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
   };
 
   const parseData = (text) => {
@@ -62,6 +75,8 @@ const CueContainer = ({ url }) => {
 
   return (
     <section className="cue-container">
+      {loading && <p>Loading... (may take a minute)</p>}
+      {error && <p>{error}</p>}
       <section className="captions-container">
         <section className="time-column">
           {captions &&
