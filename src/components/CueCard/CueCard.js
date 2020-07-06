@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import "./CueCard.css";
 
-const CueCard = ({ capt }) => {
+const CueCard = ({ capt, timeStamp, updateCaption }) => {
   const [caption, setCaption] = useState(capt);
 
   const handleInputChange = (e) => {
-    setCaption(e.target.value);
+    const newCapt = e.target.value;
+    setCaption(newCapt);
+    updateCaption(newCapt, timeStamp);
   };
 
   return (
-    <div class="caption-box">
+    <div className="caption-box">
       <textarea
         className="caption-input"
         type="text"
