@@ -13,37 +13,22 @@ describe("CueContainer", () => {
 Never drink liquid nitrogen.
 
 00:05.000 --> 00:09.000
-— It will perforate your stomach.
-— You could die.
-
-00:10.000 --> 00:14.000
-The Organisation for Sample Public Service Announcements accepts no liability for the content of this advertisement, or for the consequences of any actions taken on the basis of the information provided.`;
+It will perforate your stomach.`;
     fetchVttFile.mockResolvedValueOnce(mockVtt);
-    const { getByText } = render(
-      <CueContainer url="test" />
-    );
+    const { getByText } = render(<CueContainer url="test" />);
     const sampleCaption = await waitForElement(() =>
       getByText("Never drink liquid nitrogen.")
     );
+    const sampleStartTime = await waitForElement(() => getByText("00:01.000"));
+    const sampleEndTime = await waitForElement(() => getByText("00:04.000"));
     expect(sampleCaption).toBeInTheDocument();
+    expect(sampleStartTime).toBeInTheDocument();
+    expect(sampleEndTime).toBeInTheDocument();
+    expect(getByText("Download")).toBeInTheDocument();
   });
 
   it("initially shows the user that it is loading", () => {
-    const mockVtt = `WEBVTT
-
-00:01.000 --> 00:04.000
-Never drink liquid nitrogen.
-
-00:05.000 --> 00:09.000
-— It will perforate your stomach.
-— You could die.
-
-00:10.000 --> 00:14.000
-The Organisation for Sample Public Service Announcements accepts no liability for the content of this advertisement, or for the consequences of any actions taken on the basis of the information provided.`;
-    fetchVttFile.mockResolvedValueOnce(mockVtt);
-    const { getByText } = render(
-      <CueContainer url="test" />
-    );
+    const { getByText } = render(<CueContainer url="test" />);
     expect(getByText("Loading... (may take a minute)")).toBeInTheDocument();
   });
 });
