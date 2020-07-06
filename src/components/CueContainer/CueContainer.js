@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./CueContainer.css";
+import CueCard from '../CueCard/CueCard'
 
 const CueContainer = ({ url }) => {
   const [captions, setCaptions] = useState([]);
@@ -43,31 +44,32 @@ const CueContainer = ({ url }) => {
   };
 
   return (
-    <section className="captions-container">
-      <section className="time-column">
-        {captions &&
-          Object.keys(captions).map((time, index) => {
-            const splitTime = time.split(" ");
-            const startTime = splitTime[0];
-            const endTime = splitTime[2];
-            return (
-              <article key={index} className="time-box">
-                <p>{startTime}</p>
-                <p>{endTime}</p>
-              </article>
-            );
-          })}
+    <section class="cue-container">
+      <section className="captions-container">
+        <section className="time-column">
+          {captions &&
+            Object.keys(captions).map((time, index) => {
+              const splitTime = time.split(" ");
+              const startTime = splitTime[0];
+              const endTime = splitTime[2];
+              return (
+                <article key={index} className="time-box">
+                  <p>{startTime}</p>
+                  <p>{endTime}</p>
+                </article>
+              );
+            })}
+        </section>
+        <section className="caption-column">
+          {captions &&
+            Object.values(captions).map((capt, index) => {
+              return (
+                <CueCard key={index} capt={capt}/>
+              );
+            })}
+        </section>
       </section>
-      <section className="caption-column">
-        {captions &&
-          Object.values(captions).map((capt, index) => {
-            return (
-              <article key={index} className="caption-box">
-                <p>{capt}</p>
-              </article>
-            );
-          })}
-      </section>
+      <button className="download-btn">Download</button>
     </section>
   );
 };
