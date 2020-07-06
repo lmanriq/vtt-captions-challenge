@@ -4,6 +4,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This application take a URL of a publicly accessibly VTT file and parses it out to be easily readable for the user. The user can then modify the text of the captions and download the edited file to save to their computer. 
 
+## Screenshots
+
+![loaded file](./public/screenshots/vtt-screen-1.png)
+![editing a file](./public/screenshots/vtt-screen-2.png)
+![downloaded file](./public/screenshots/vtt-screen-3.png)
+
 ## Technologies used
  - React
  - React Hooks
