@@ -45,7 +45,10 @@ const CueContainer = ({ url }) => {
   };
 
   const handleDownload = () => {
-    fileDownload(JSON.stringify(captions), 'captions.vtt')
+    const data = "WEBVTT\n\n" + Object.keys(captions).map(caption => {
+      return `${caption}\n${captions[caption]}\n\n`
+    }).join('')
+    fileDownload(data, 'captions.vtt')
   }
 
   const updateCaption = (newCapt, timeStamp) => {
