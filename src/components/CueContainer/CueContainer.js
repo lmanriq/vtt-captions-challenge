@@ -44,6 +44,10 @@ const CueContainer = ({ url }) => {
     setCaptions(matched);
   };
 
+  const handleDownload = () => {
+    fileDownload(JSON.stringify(captions), 'captions.vtt')
+  }
+
   const updateCaption = (newCapt, timeStamp) => {
     const captionsCopy = {...captions}
     captionsCopy[timeStamp] = newCapt;
@@ -78,7 +82,7 @@ const CueContainer = ({ url }) => {
             })}
         </section>
       </section>
-      <button className="download-btn" >Download</button>
+      <button className="download-btn" onClick={() => handleDownload()}>Download</button>
     </section>
   );
 };
