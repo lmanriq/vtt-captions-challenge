@@ -4,7 +4,7 @@ import "./SearchForm.css";
 const SearchForm = ({ saveUrl }) => {
   const [url, setUrl] = useState("");
 
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     setUrl(e.target.value);
   };
 

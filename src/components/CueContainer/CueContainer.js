@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./CueContainer.css";
-import CueCard from '../CueCard/CueCard'
-import fileDownload from 'js-file-download';
+import CueCard from "../CueCard/CueCard";
+import fileDownload from "js-file-download";
 
 const CueContainer = ({ url }) => {
   const [captions, setCaptions] = useState([]);
@@ -13,7 +13,6 @@ const CueContainer = ({ url }) => {
   }, [url]);
 
   const fetchData = async (url) => {
-    console.log("enter");
     const response = await fetch(`https://cors-anywhere.herokuapp.com/${url}`, {
       headers: {
         "Content-Type": "text/vtt",
@@ -36,27 +35,30 @@ const CueContainer = ({ url }) => {
       }
     });
     const timeStamps = Object.keys(matched);
-    timeStamps.forEach(stamp => {
+    timeStamps.forEach((stamp) => {
       const captions = matched[stamp];
-      const captionsString = captions.join(' ');
-      matched[stamp] = captionsString
-    })
+      const captionsString = captions.join(" ");
+      matched[stamp] = captionsString;
+    });
     setCaptions(matched);
   };
 
   const handleDownload = () => {
-    const data = "WEBVTT\n\n" + Object.keys(captions).map(caption => {
-      return `${caption}\n${captions[caption]}\n\n`
-    }).join('')
-    fileDownload(data, 'captions.vtt')
-  }
+    const data =
+      "WEBVTT\n\n" +
+      Object.keys(captions)
+        .map((caption) => {
+          return `${caption}\n${captions[caption]}\n\n`;
+        })
+        .join("");
+    fileDownload(data, "captions.vtt");
+  };
 
   const updateCaption = (newCapt, timeStamp) => {
-    const captionsCopy = {...captions}
+    const captionsCopy = { ...captions };
     captionsCopy[timeStamp] = newCapt;
     setCaptions(captionsCopy);
-    console.log(captions)
-  }
+  };
 
   return (
     <section className="cue-container">
@@ -78,14 +80,23 @@ const CueContainer = ({ url }) => {
         <section className="caption-column">
           {captions &&
             Object.values(captions).map((capt, index) => {
-              const timeStamp = Object.keys(captions).find(key => captions[key] === capt)
+              const timeStamp = Object.keys(captions).find(
+                (key) => captions[key] === capt
+              );
               return (
-                <CueCard key={index} capt={capt} timeStamp={timeStamp} updateCaption={updateCaption}/>
+                <CueCard
+                  key={index}
+                  capt={capt}
+                  timeStamp={timeStamp}
+                  updateCaption={updateCaption}
+                />
               );
             })}
         </section>
       </section>
-      <button className="download-btn" onClick={() => handleDownload()}>Download</button>
+      <button className="download-btn" onClick={() => handleDownload()}>
+        Download
+      </button>
     </section>
   );
 };
