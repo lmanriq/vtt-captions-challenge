@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./CueContainer.css";
 import CueCard from '../CueCard/CueCard'
+import fileDownload from 'js-file-download';
 
 const CueContainer = ({ url }) => {
   const [captions, setCaptions] = useState([]);
@@ -43,8 +44,15 @@ const CueContainer = ({ url }) => {
     setCaptions(matched);
   };
 
+  const updateCaption = (newCapt, timeStamp) => {
+    const captionsCopy = {...captions}
+    captionsCopy[timeStamp] = newCapt;
+    setCaptions(captionsCopy);
+    console.log(captions)
+  }
+
   return (
-    <section class="cue-container">
+    <section className="cue-container">
       <section className="captions-container">
         <section className="time-column">
           {captions &&
@@ -63,13 +71,14 @@ const CueContainer = ({ url }) => {
         <section className="caption-column">
           {captions &&
             Object.values(captions).map((capt, index) => {
+              const timeStamp = Object.keys(captions).find(key => captions[key] === capt)
               return (
-                <CueCard key={index} capt={capt}/>
+                <CueCard key={index} capt={capt} timeStamp={timeStamp} updateCaption={updateCaption}/>
               );
             })}
         </section>
       </section>
-      <button className="download-btn">Download</button>
+      <button className="download-btn" >Download</button>
     </section>
   );
 };
